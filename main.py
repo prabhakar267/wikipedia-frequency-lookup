@@ -2,11 +2,36 @@
 # @Author: prabhakar
 # @Date:   2016-04-18 03:00:45
 # @Last Modified by:   Prabhakar Gupta
-# @Last Modified time: 2016-04-18 03:12:49
+# @Last Modified time: 2016-04-18 03:20:42
 
 from bs4 import BeautifulSoup
 import requests
 import re
+import operator
+
+
+def getWordList(url):
+	word_list = []
+	
+	source_code = requests.get(url)
+	plain_text = source_code.text
+	soup = BeautifulSoup(plain_text,'lxml')
+	
+	for text in soup.findAll('p'):
+		if text.text is None:
+			continue
+
+		content = text.text
+		words = content.lower().split()
+
+		for word in words:
+			cleaned_word = clean_word(word)
+
+			if len(cleaned_word) > 0:
+				word_list.append(cleaned_word)
+
+	return word_list
+
 
 
 def clean_word(word):
@@ -14,31 +39,29 @@ def clean_word(word):
 	return cleaned_word
 
 
+
+def createFrquencyTable(word_list):
+	word_count = {}
+
+	for word in word_list:
+		if word in word_count:
+			word_count[word] += 1
+		else:
+			word_count[word] = 1
+
+	return word_count
+
+
+
 wikipedia_link = "https://en.wikipedia.org/wiki/Martin_Luther_King,_Jr."
-word_list = []
-
-
-source_code = requests.get(wikipedia_link)
-plain_text = source_code.text
-soup = BeautifulSoup(plain_text,'lxml')
-
+page_word_list = getWordList(wikipedia_link)
+page_word_count = createFrquencyTable(page_word_list)
 
 count = 1
-for text in soup.findAll('p'):
-	if text.text is None:
-		continue
+for key,value in sorted(page_word_count.items(), key=operator.itemgetter(1), reverse=True):
+	if count > 10:
+		break
 
-	content = text.text
-	words = content.lower().split()
+	print('"' + str(key) + '" \t- ' + str(value) + " times")
 
-	for word in words:
-		cleaned_word = clean_word(word)
-
-		if len(cleaned_word) > 0:
-			word_list.append(cleaned_word)
-			print(cleaned_word)
-
-			count += 1
-
-
-print(count)
+	count += 1
