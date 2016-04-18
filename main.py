@@ -57,11 +57,9 @@ wikipedia_link = "https://en.wikipedia.org/wiki/Martin_Luther_King,_Jr."
 page_word_list = getWordList(wikipedia_link)
 page_word_count = createFrquencyTable(page_word_list)
 
-count = 1
-for key,value in sorted(page_word_count.items(), key=operator.itemgetter(1), reverse=True):
-	if count > 10:
-		break
+sorted_word__frequency_list = sorted(page_word_count.items(), key=operator.itemgetter(1), reverse=True)
+if len(sorted_word_frequency_list) > 10:
+	sorted_word_frequency_list = sorted_word_frequency_list[:10]
 
+for key, value in sorted_word_frequency_list:
 	print('"' + str(key) + '" \t- ' + str(value) + " times")
-
-	count += 1
