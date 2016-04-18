@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: prabhakar
 # @Date:   2016-04-18 03:00:45
-# @Last Modified by:   Prabhakar Gupta
-# @Last Modified time: 2016-04-18 03:20:42
+# @Last Modified by:   Sahil Dua
+# @Last Modified time: 2016-04-18 23:14:51
 
 from bs4 import BeautifulSoup
 import requests
@@ -57,7 +57,7 @@ wikipedia_link = "https://en.wikipedia.org/wiki/Martin_Luther_King,_Jr."
 page_word_list = getWordList(wikipedia_link)
 page_word_count = createFrquencyTable(page_word_list)
 
-sorted_word__frequency_list = sorted(page_word_count.items(), key=operator.itemgetter(1), reverse=True)
+sorted_word_frequency_list = sorted(page_word_count.items(), key=operator.itemgetter(1), reverse=True)
 if len(sorted_word_frequency_list) > 10:
 	sorted_word_frequency_list = sorted_word_frequency_list[:10]
 
