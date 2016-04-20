@@ -2,7 +2,7 @@
 # @Author: prabhakar
 # @Date:   2016-04-18 03:00:45
 # @Last Modified by:   Prabhakar Gupta
-# @Last Modified time: 2016-04-20 21:34:35
+# @Last Modified time: 2016-04-20 21:59:22
 
 from bs4 import BeautifulSoup
 import requests
@@ -72,8 +72,8 @@ page_word_list = getWordList(url)
 page_word_count = createFrquencyTable(page_word_list)
 
 sorted_word_frequency_list = sorted(page_word_count.items(), key=operator.itemgetter(1), reverse=True)
-if len(sorted_word_frequency_list) > 10:
-	sorted_word_frequency_list = sorted_word_frequency_list[:10]
+if len(sorted_word_frequency_list) > 20:
+	sorted_word_frequency_list = sorted_word_frequency_list[:20]
 
 print_headers = ['Word', 'Frequency']
 
