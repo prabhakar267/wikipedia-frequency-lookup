@@ -2,7 +2,7 @@
 # @Author: prabhakar
 # @Date:   2016-04-18 03:00:45
 # @Last Modified by:   Prabhakar Gupta
-# @Last Modified time: 2016-04-20 11:47:34
+# @Last Modified time: 2016-04-20 21:34:35
 
 from bs4 import BeautifulSoup
 import requests
@@ -10,6 +10,7 @@ import re
 import operator
 import json
 from tabulate import tabulate
+import sys
 
 
 def getWordList(url):
@@ -58,7 +59,7 @@ def createFrquencyTable(word_list):
 wikipedia_api_link = "https://en.wikipedia.org/w/api.php?format=json&action=query&list=search&srsearch="
 wikipedia_link = "https://en.wikipedia.org/wiki/"
 
-string_query = raw_input("aloo")
+string_query = sys.argv[1]
 
 url = wikipedia_api_link + string_query
 response = requests.get(url)
