@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 # @Author: prabhakar
 # @Date:   2016-04-18 03:00:45
-# @Last Modified by:   Sahil Dua
-# @Last Modified time: 2016-04-18 23:14:51
+# @Last Modified by:   Prabhakar Gupta
+# @Last Modified time: 2016-04-20 11:29:30
 
 from bs4 import BeautifulSoup
 import requests
 import re
 import operator
+import json
 
 
 def getWordList(url):
@@ -53,8 +54,19 @@ def createFrquencyTable(word_list):
 
 
 
-wikipedia_link = "https://en.wikipedia.org/wiki/Martin_Luther_King,_Jr."
-page_word_list = getWordList(wikipedia_link)
+wikipedia_api_link = "https://en.wikipedia.org/w/api.php?format=json&action=query&list=search&srsearch="
+wikipedia_link = "https://en.wikipedia.org/wiki/"
+
+string_query = raw_input("aloo")
+
+url = wikipedia_api_link + string_query
+response = requests.get(url)
+
+data = json.loads(response.content)
+wikipedia_page_tag = data['query']['search'][0]['title']
+
+url = wikipedia_link + wikipedia_page_tag
+page_word_list = getWordList(url)
 page_word_count = createFrquencyTable(page_word_list)
 
 sorted_word_frequency_list = sorted(page_word_count.items(), key=operator.itemgetter(1), reverse=True)
