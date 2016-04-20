@@ -2,13 +2,14 @@
 # @Author: prabhakar
 # @Date:   2016-04-18 03:00:45
 # @Last Modified by:   Prabhakar Gupta
-# @Last Modified time: 2016-04-20 11:29:30
+# @Last Modified time: 2016-04-20 11:47:34
 
 from bs4 import BeautifulSoup
 import requests
 import re
 import operator
 import json
+from tabulate import tabulate
 
 
 def getWordList(url):
@@ -73,5 +74,6 @@ sorted_word_frequency_list = sorted(page_word_count.items(), key=operator.itemge
 if len(sorted_word_frequency_list) > 10:
 	sorted_word_frequency_list = sorted_word_frequency_list[:10]
 
-for key, value in sorted_word_frequency_list:
-	print('"' + str(key) + '" \t- ' + str(value) + " times")
+print_headers = ['Word', 'Frequency']
+
+print tabulate(sorted_word_frequency_list, headers=print_headers, tablefmt='orgtbl')
