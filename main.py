@@ -2,7 +2,7 @@
 # @Author: prabhakar
 # @Date:   2016-04-18 03:00:45
 # @Last Modified by:   Prabhakar Gupta
-# @Last Modified time: 2016-04-20 21:59:22
+# @Last Modified time: 2016-04-24 01:14:58
 
 from bs4 import BeautifulSoup
 import requests
@@ -72,9 +72,20 @@ page_word_list = getWordList(url)
 page_word_count = createFrquencyTable(page_word_list)
 
 sorted_word_frequency_list = sorted(page_word_count.items(), key=operator.itemgetter(1), reverse=True)
+
+total_words_sum = 0
+for key,value in sorted_word_frequency_list:
+	total_words_sum = total_words_sum + value
+
 if len(sorted_word_frequency_list) > 20:
 	sorted_word_frequency_list = sorted_word_frequency_list[:20]
 
-print_headers = ['Word', 'Frequency']
+final_list = []
+for key,value in sorted_word_frequency_list:
+	percentage_value = float(value * 100) / total_words_sum
+	final_list.append([key, value, round(percentage_value, 4)])
 
-print tabulate(sorted_word_frequency_list, headers=print_headers, tablefmt='orgtbl')
+print_headers = ['Word', 'Frequency', 'Frequency Percentage']
+
+print tabulate(final_list, headers=print_headers, tablefmt='orgtbl')
+
