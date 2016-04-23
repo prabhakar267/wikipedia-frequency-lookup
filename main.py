@@ -2,7 +2,7 @@
 # @Author: prabhakar
 # @Date:   2016-04-18 03:00:45
 # @Last Modified by:   Prabhakar Gupta
-# @Last Modified time: 2016-04-24 01:14:58
+# @Last Modified time: 2016-04-24 01:38:54
 
 from bs4 import BeautifulSoup
 import requests
@@ -11,6 +11,7 @@ import operator
 import json
 from tabulate import tabulate
 import sys
+from stop_words import get_stop_words
 
 
 def getWordList(url):
@@ -55,11 +56,29 @@ def createFrquencyTable(word_list):
 	return word_count
 
 
+def remove_stop_words(frequency_list):
+	stop_words = get_stop_words('en')
+	
+	temp_list = []
+	for key,value in frequency_list:
+		if key not in stop_words:
+			temp_list.append([key, value])
+
+	return temp_list
+	
+
+
 
 wikipedia_api_link = "https://en.wikipedia.org/w/api.php?format=json&action=query&list=search&srsearch="
 wikipedia_link = "https://en.wikipedia.org/wiki/"
 
+
 string_query = sys.argv[1]
+
+if(len(sys.argv) > 2):
+	search_mode = True
+else:
+	search_mode = False
 
 url = wikipedia_api_link + string_query
 response = requests.get(url)
@@ -72,6 +91,9 @@ page_word_list = getWordList(url)
 page_word_count = createFrquencyTable(page_word_list)
 
 sorted_word_frequency_list = sorted(page_word_count.items(), key=operator.itemgetter(1), reverse=True)
+
+if(search_mode):
+	sorted_word_frequency_list = remove_stop_words(sorted_word_frequency_list)
 
 total_words_sum = 0
 for key,value in sorted_word_frequency_list:
