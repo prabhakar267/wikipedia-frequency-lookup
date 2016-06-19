@@ -72,6 +72,9 @@ def remove_stop_words(frequency_list):
 wikipedia_api_link = "https://en.wikipedia.org/w/api.php?format=json&action=query&list=search&srsearch="
 wikipedia_link = "https://en.wikipedia.org/wiki/"
 
+if(len(sys.argv) < 2):
+	print("Enter valid string")
+	exit()
 
 string_query = sys.argv[1]
 
