@@ -4,15 +4,20 @@ Simple script written in Python to get the 20 words and their frequency percenta
 You enter your string and using [Wikipedia Search API](https://www.mediawiki.org/wiki/API:Search), you get the top 20 words
 
 Built this, so that I could implement my basic learning somewhere and play around with some libraries :books: . 
-
-```python
-  python main.py <your-string>
-```
-
 If you want to remove the stop words _(such as "and", "the", "a", "an", and similar words)_ from frequency table, simply add a **yes** after your string.
 
+## Instructions to run
++ Clone project
+```
+git clone https://github.com/prabhakar267/wikipedia-frequency-lookup.git && cd wikipedia-frequency-lookup
+```
++ Install dependencies
+```
+[sudo] pip install -r requirements.txt
+```
++ Run script
 ```python
-  python main.py <your-string> yes
+  python main.py <your-string> [yes]
 ```
 
 ----
