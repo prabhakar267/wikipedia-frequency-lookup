@@ -16,11 +16,11 @@ from stop_words import get_stop_words
 
 def getWordList(url):
 	word_list = []
-	
+
 	source_code = requests.get(url)
 	plain_text = source_code.text
 	soup = BeautifulSoup(plain_text,'lxml')
-	
+
 	for text in soup.findAll('p'):
 		if text.text is None:
 			continue
@@ -58,14 +58,14 @@ def createFrquencyTable(word_list):
 
 def remove_stop_words(frequency_list):
 	stop_words = get_stop_words('en')
-	
+
 	temp_list = []
 	for key,value in frequency_list:
 		if key not in stop_words:
 			temp_list.append([key, value])
 
 	return temp_list
-	
+
 
 
 
@@ -84,7 +84,10 @@ else:
 	search_mode = False
 
 url = wikipedia_api_link + string_query
-response = requests.get(url)
+try:
+    response = requests.get(url)
+except Exception, e:
+    print "Error :", e
 
 data = json.loads(response.content)
 wikipedia_page_tag = data['query']['search'][0]['title']
