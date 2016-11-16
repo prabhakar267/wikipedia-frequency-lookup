@@ -68,7 +68,6 @@ def remove_stop_words(frequency_list):
 
 
 
-
 wikipedia_api_link = "https://en.wikipedia.org/w/api.php?format=json&action=query&list=search&srsearch="
 wikipedia_link = "https://en.wikipedia.org/wiki/"
 
@@ -83,12 +82,14 @@ if(len(sys.argv) > 2):
 else:
 	search_mode = False
 
+	
 url = wikipedia_api_link + string_query
 try:
     response = requests.get(url)
 except Exception, e:
     print "Error :", e
 
+	
 data = json.loads(response.content)
 wikipedia_page_tag = data['query']['search'][0]['title']
 
