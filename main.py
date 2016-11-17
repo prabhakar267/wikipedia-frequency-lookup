@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Author: prabhakar
-# @Date:   2016-04-18 03:00:45
-# @Last Modified by:   Prabhakar Gupta
-# @Last Modified time: 2016-04-24 01:38:54
-
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -15,56 +9,56 @@ from stop_words import get_stop_words
 
 
 def getWordList(url):
-	word_list = []
+    word_list = []
 
-	source_code = requests.get(url)
-	plain_text = source_code.text
-	soup = BeautifulSoup(plain_text,'lxml')
+    source_code = requests.get(url)
+    plain_text = source_code.text
+    soup = BeautifulSoup(plain_text,'lxml')
 
-	for text in soup.findAll('p'):
-		if text.text is None:
-			continue
+    for text in soup.findAll('p'):
+        if text.text is None:
+            continue
 
-		content = text.text
-		words = content.lower().split()
+        content = text.text
+        words = content.lower().split()
 
-		for word in words:
-			cleaned_word = clean_word(word)
+        for word in words:
+            cleaned_word = clean_word(word)
 
-			if len(cleaned_word) > 0:
-				word_list.append(cleaned_word)
+            if len(cleaned_word) > 0:
+                word_list.append(cleaned_word)
 
-	return word_list
+    return word_list
 
 
 
 def clean_word(word):
-	cleaned_word = re.sub('[^A-Za-z]+', '', word)
-	return cleaned_word
+    cleaned_word = re.sub('[^A-Za-z]+', '', word)
+    return cleaned_word
 
 
 
 def createFrquencyTable(word_list):
-	word_count = {}
+    word_count = {}
 
-	for word in word_list:
-		if word in word_count:
-			word_count[word] += 1
-		else:
-			word_count[word] = 1
+    for word in word_list:
+        if word in word_count:
+            word_count[word] += 1
+        else:
+            word_count[word] = 1
 
-	return word_count
+    return word_count
 
 
 def remove_stop_words(frequency_list):
-	stop_words = get_stop_words('en')
+    stop_words = get_stop_words('en')
 
-	temp_list = []
-	for key,value in frequency_list:
-		if key not in stop_words:
-			temp_list.append([key, value])
+    temp_list = []
+    for key,value in frequency_list:
+        if key not in stop_words:
+            temp_list.append([key, value])
 
-	return temp_list
+    return temp_list
 
 
 
@@ -72,15 +66,15 @@ wikipedia_api_link = "https://en.wikipedia.org/w/api.php?format=json&action=quer
 wikipedia_link = "https://en.wikipedia.org/wiki/"
 
 if(len(sys.argv) < 2):
-	print("Enter valid string")
-	exit()
+    print("Enter valid string")
+    exit()
 
 string_query = sys.argv[1]
 
 if(len(sys.argv) > 2):
-	search_mode = True
+    search_mode = True
 else:
-	search_mode = False
+    search_mode = False
 
 
 url = wikipedia_api_link + string_query
@@ -115,5 +109,13 @@ try:
 
     print tabulate(final_list, headers=print_headers, tablefmt='orgtbl')
 
-except Exception, e:
-    print "Error :", e
+except requests.exceptions.ConnectionError:
+    print "There is a problem with your internet connectivity or DNS resolution."
+
+except requests.exceptions.Timeout:
+    print "The server didn't respond. Please, try again later."
+
+except requests.exceptions.RequestException as e:
+    # catastrophic error. bail.
+    print "There was a critical error"
+    print e
