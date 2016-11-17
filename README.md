@@ -22,6 +22,6 @@ git clone https://github.com/prabhakar267/wikipedia-frequency-lookup.git && cd w
 
 ----
 
-![screenshot](/screenshots/Screenshot%20from%202016-04-24%2001:42:18.png?raw=true)
+![screenshot](/screenshots/Screenshot%20from%202016-04-24%2001-42-18.png?raw=true)
 
-![screenshot](/screenshots/Screenshot%20from%202016-04-24%2001:42:44.png?raw=true)
+![screenshot](/screenshots/Screenshot%20from%202016-04-24%2001-42-44.png?raw=true)
