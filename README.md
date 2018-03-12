@@ -8,15 +8,22 @@ If you want to remove the stop words _(such as "and", "the", "a", "an", and simi
 
 ## Instructions to run
 + Clone project
+```shell
+git clone https://github.com/prabhakar267/wikipedia-frequency-lookup.git
+cd wikipedia-frequency-lookup
 ```
-git clone https://github.com/prabhakar267/wikipedia-frequency-lookup.git && cd wikipedia-frequency-lookup
++ Add virtual environment
+```shell
+pip install virtualenv
+virtualenv venv
+source venv/bin/activate
 ```
 + Install dependencies
-```
+```shell
 [sudo] pip install -r requirements.txt
 ```
 + Run script
-```python
+```shell
   python main.py <your-string> [yes]
 ```
 
